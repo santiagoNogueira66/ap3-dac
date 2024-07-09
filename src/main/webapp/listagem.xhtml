@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	<title>Listagem de Jogos</title>
+</h:head>
+
+<h:body>
+	<h:form id="form">
+		<p:messages id="msgs" showDetail="true" autoUpdate="true" />
+
+		<div class="card">
+			<p:dataTable var="j" value="#{jogoBean.lista}" editable="true">
+
+				<p:ajax event="rowEdit" listener="#{jogoBean.editar}"
+					update=":form:msgs" />
+
+				<p:column headerText="Data da Partida">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{j.dataPartida}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:calendar value="#{j.dataPartida}" pattern="dd/MM/yyyy" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Data de Cadastro">
+					<h:outputText value="#{j.dataCadastro}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Time 1">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{j.time1}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{j.time1}">
+								<f:selectItem itemLabel="A" itemValue="a" />
+								<f:selectItem itemLabel="B" itemValue="b" />
+								<f:selectItem itemLabel="C" itemValue="c" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Time 2">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{j.time2}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{j.time2}">
+								<f:selectItem itemLabel="A" itemValue="A" />
+								<f:selectItem itemLabel="B" itemValue="B" />
+								<f:selectItem itemLabel="C" itemValue="C" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Campeonato">
+					<h:outputText value="#{j.campeonato.nome}" />
+				</p:column>
+
+				<p:column headerText="Gols Time 1">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{j.golsTime1}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{j.golsTime1}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Gols Time 2">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{j.golsTime2}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{j.golsTime2}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column>
+					<p:rowEditor />
+				</p:column>
+
+				<p:column>
+					<p:commandButton value="Excluir" action="#{jogoBean.excluir(j)}"
+						update="form">
+						<f:setPropertyActionListener target="#{jogoBean.jogo}"
+							value="#{j}" />
+					</p:commandButton>
+				</p:column>
+
+				<p:column>
+					<p:commandButton value="Resumo" action="#{jogoBean.resumo}" update="form"/>
+				</p:column>
+
+			</p:dataTable>
+		</div>
+		<p:link outcome="index" value="Voltar" />
+	</h:form>
+</h:body>
+</html>

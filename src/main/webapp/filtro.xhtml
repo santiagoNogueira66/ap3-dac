@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<title>Filtrar Jogos</title>
+</h:head>
+
+<h:body>
+	<h:form id="filtroForm">
+		<p:panel header="Filtrar Jogos">
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Selecione o Time:" />
+				<p:selectOneMenu value="#{jogoBean.timeSelecionado}">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItem itemValue="A" itemLabel="A" />
+					<f:selectItem itemValue="B" itemLabel="B" />
+					<f:selectItem itemValue="C" itemLabel="C" />
+				</p:selectOneMenu>
+				
+				<p:commandButton value="Localizar" action="#{jogoBean.localizar}" update=":filtroForm:resultados" />
+				<p:link outcome="index.xhtml" value="index"/>
+			</p:panelGrid>
+			
+		</p:panel>
+
+		<p:dataTable var="j" value="#{jogoBean.lista}" id="resultados">
+			<p:column headerText="Data da Partida">
+				<h:outputText value="#{j.dataPartida}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Time 1">
+				<h:outputText value="#{j.time1}" />
+			</p:column>
+			<p:column headerText="Time 2">
+				<h:outputText value="#{j.time2}" />
+			</p:column>
+			<p:column headerText="Gols Time 1">
+				<h:outputText value="#{j.golsTime1}" />
+			</p:column>
+			<p:column headerText="Gols Time 2">
+				<h:outputText value="#{j.golsTime2}" />
+			</p:column>
+			<p:column headerText="Campeonato">
+				<h:outputText value="#{j.campeonato.nome}" />
+			</p:column>
+			
+		</p:dataTable>
+		
+	</h:form>
+</h:body>
+</html>
